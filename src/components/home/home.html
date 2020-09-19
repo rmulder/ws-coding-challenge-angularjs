@@ -1,0 +1,33 @@
+<div class="container">
+	<div ng-controller="ProductsController">
+		<h1>{{title}}</h1>
+		<div class="row">
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 product" ng-repeat="product in products">
+				<img ng-src="{{product.hero.href}}" alt="" rel="{{product.hero.rel}}" ng-click="toggleCarousel(product)"
+					width="{{product.hero.width}}" height="{{product.hero.height}}">
+				<h2 ng-bind-html="product.name" class="product-name"></h2>
+				<div class="product-price">$ 
+					<span ng-show="{{product.priceRange.type === 'sale'}}">{{product.priceRange.selling.low}}</span>
+					<span ng-hide="{{product.priceRange.type === 'sale'}}">{{product.priceRange.regular.low}}</span>
+				</div>
+				<div id="{{product.id}}_carousel" class="carousel hidden">
+					<button type="button" class="close close-button" ng-click="toggleCarousel(product)" aria-label="Close">
+						<span aria-hidden="true" class="cross-symbol">&times;</span>
+					</button>
+					<div ng-show="product.slides.length > 0">
+						<img ng-src="{{product.hero.href}}" alt="" rel="{{product.hero.rel}}" width="{{product.hero.width}}" height="{{product.hero.height}}">
+						<div uib-carousel active="active" interval="myInterval" no-wrap="noWrapSlides">
+							<div uib-slide ng-repeat="slide in product.slides track by slide.id" index="slide.id">
+								<img ng-src="{{slide.image}}" style="margin:auto;"  width="{{product.hero.width}}" height="{{product.hero.height}}">
+							</div>
+						</div>
+					</div>
+					<div ng-hide="product.slides.length > 0">
+						<img ng-src="{{product.hero.href}}" alt="" rel="{{product.hero.rel}}" width="{{product.hero.width}}" height="{{product.hero.height}}">
+						<h3>Product details not available.</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
